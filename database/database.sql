@@ -95,3 +95,5 @@ INSERT INTO parkingslots (locationid, typeid, slotname, price, isavailable) VALU
 (9, 2, 'I2', 3.99, 1),
 (10, 1, 'J1', 3.99, 0),
 (10, 1, 'J2', 3.99, 1);
+
+

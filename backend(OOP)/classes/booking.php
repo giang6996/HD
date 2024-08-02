@@ -11,7 +11,6 @@ class Booking {
     private int $parkingSlotId;
     private DateTime $bookingTime;
     private int $duration;
-    private int $invoiceId;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -58,13 +57,6 @@ class Booking {
         $this->duration = $duration;
     }
 
-    public function getInvoiceId(): int {
-        return $this->invoiceId;
-    }
-
-    public function setInvoiceId(int $invoiceId): void {
-        $this->invoiceId = $invoiceId;
-    }
 
     public function createBooking($accountId, $parkingSlotId, $bookingTime, $duration) {
         $stmt = $this->conn->prepare("INSERT INTO $this->table (accountId, parkingSlotId, bookingTime, duration) VALUES (?, ?, ?, ?)");
@@ -77,6 +69,12 @@ class Booking {
     public function getBookingDetails($bookingId) {
         $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE id = ?");
         $stmt->execute([$bookingId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getBookingDetailsByAccountId($accountId) {
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE accountId = ?");
+        $stmt->execute([$accountId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 

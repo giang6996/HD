@@ -16,7 +16,7 @@ const Cart = {
         async fetchCartItems() {
             try {
                 const response = await fetch('database/API/api-cart.php', {
-                    method: 'GET',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     }

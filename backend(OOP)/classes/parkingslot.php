@@ -1,5 +1,5 @@
 <?php
-require_once '../config/db.php';
+require_once '../configs/db.php';
 
 
 class ParkingSlot {
@@ -8,6 +8,7 @@ class ParkingSlot {
 
     // Variables with data types
     private int $id;
+    private string $slotName;
     private int $slotTypeId;
     private string $status;
 
@@ -22,6 +23,13 @@ class ParkingSlot {
 
     public function setId(int $id): void {
         $this->id = $id;
+    }
+
+    public function getSlotName(): string {
+        return $this->slotName;
+    }
+    public function setSlotName(string $slotName): void {
+        $this->slotName = $slotName;
     }
 
     public function getSlotTypeId(): int {
@@ -40,9 +48,9 @@ class ParkingSlot {
         $this->status = $status;
     }
 
-    public function createParkingSlot($slotTypeId, $status) {
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (slotTypeId, status) VALUES (?, ?)");
-        if ($stmt->execute([$slotTypeId, $status])) {
+    public function createParkingSlot($slotName, $slotTypeId, $status) {
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (slotName, slotTypeId, status) VALUES (?, ?, ?)");
+        if ($stmt->execute([$slotName, $slotTypeId, $status])) {
             return ['success' => true, 'message' => 'Parking slot created'];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
@@ -52,6 +60,12 @@ class ParkingSlot {
         $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE id = ?");
         $stmt->execute([$parkingSlotId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getParkingSlotAll() {
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function updateParkingSlot($parkingSlotId, $slotTypeId, $status) {

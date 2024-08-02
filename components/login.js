@@ -30,14 +30,15 @@ const Login = {
                     return;
                 }
 
-                const response = await fetch('database/API/api-login.php', {
+                const response = await fetch('./backend(OOP)/handler/accountHandler.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        email: this.email,
-                        password: this.password
+                        customerEmail: this.email,
+                        customerPassword: this.password,
+                        authmode: 'login'
                     })
                 });
 

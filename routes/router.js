@@ -2,14 +2,14 @@ import Home from '../components/home.js';
 import Catalog from '../components/catalog.js';
 import Login from '../components/login.js';
 import Signup from '../components/signup.js';
-import Cart from '../components/cart.js';
+import Book from '../components/book.js';
 
 const routes = [
     { path: '/', component: Home },
     { path: '/catalog', component: Catalog },
     { path: '/login', component: Login },
     { path: '/signup', component: Signup },
-    { path: '/cart', component: Cart },
+    { path: '/book', component: Book },
 ];
 
 const router = VueRouter.createRouter({ 
