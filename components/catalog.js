@@ -14,6 +14,7 @@ const Catalog = {
       methods: {
         async fetchParkingLots() {
           try {
+            // const response = await fetch('database/API/api-slots.php');
             const response = await fetch('database/API/api-slots.php');
             const result = await response.json();
             if (result.success) {
