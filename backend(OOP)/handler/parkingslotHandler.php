@@ -28,6 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response = $controller->getParkingSlotAll();
             echo json_encode($response);
             break;
+        case 'getParkingSlotAvailable':
+            $response = $controller->getParkingSlotAvailable();
+            echo json_encode($response);
+            break;
 
         case 'updateParkingSlot':
             $id = $_POST['id'] ?? '';

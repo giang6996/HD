@@ -68,8 +68,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'cancelBooking':
-            if (isset($data['id'])) {
+            if (isset($data['id']) && isset($data['parkingSlotId'])) {
                 $response = $controller->cancelBooking($data['id']);
+
+                if ($response['success']) {
+                    $parkingSlotData = [
+                        'action' => 'updateAvailability',
+                        'id' => $data['parkingSlotId'],
+                        'status' => '1' 
+                    ];
+
+                    $parkingSlotResponse = updateParkingSlotAvailability($parkingSlotData);
+                    if ($parkingSlotResponse === null || !$parkingSlotResponse['success']) {
+                        $response['parkingSlotUpdateError'] = $parkingSlotResponse['message'] ?? 'Failed to update parking slot availability';
+                    }
+                }
+
             } else {
                 $response = ['success' => false, 'message' => 'Missing required fields for cancelBooking'];
             }

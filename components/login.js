@@ -43,11 +43,15 @@ const Login = {
                 });
 
                 const result = await response.json();
-                console.log(result);
 
                 if (result.success) {
-                    localStorage.setItem('user', JSON.stringify(result));
-                    this.$router.push('/catalog');
+                    const userData = {
+                        id: result.data.id,
+                        customerName: result.data.customerName,
+                        customerEmail: result.data.customerEmail
+                    };
+                localStorage.setItem('user', JSON.stringify(userData));
+                this.$router.push('/catalog');
                 } else {
                     this.errorMessage = result.message;
                 }

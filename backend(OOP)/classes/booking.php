@@ -73,9 +73,14 @@ class Booking {
     }
 
     public function getBookingDetailsByAccountId($accountId) {
-        $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE accountId = ?");
+        $stmt = $this->conn->prepare(
+            "SELECT b.*, ps.slotName 
+            FROM $this->table b 
+            JOIN parking_slots ps ON b.parkingSlotId = ps.id 
+            WHERE b.accountId = ?"
+        );
         $stmt->execute([$accountId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function updateBooking($bookingId, $parkingSlotId, $bookingTime, $duration) {

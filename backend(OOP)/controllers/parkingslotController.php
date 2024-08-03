@@ -45,6 +45,15 @@ class ParkingSlotController {
         }
     }
 
+    public function getParkingSlotAvailable() {
+        $parkingSlots = $this->parkingSlot->getParkingSlotAvailable();
+        if ($parkingSlots) {
+            return ['success' => true, 'data' => $parkingSlots];
+        } else {
+            return ['success' => false, 'message' => 'No parking slots found'];
+        }
+    }
+
     // Update a parking slot
     public function updateParkingSlot($id, $data) {
         if (!isset($id) || !isset($data['slotTypeId']) || !isset($data['status'])) {

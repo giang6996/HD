@@ -1,47 +1,60 @@
-const Cart = {
+const Book = {
     data() {
         return {
-            cartItems: [],
-            cartid: ''
+            bookItems: [],
+            bookid: ''
         };
     },
     created() {
-        this.fetchCartItems();
+        this.fetchBookItems();
     },
     methods: {
-        selectedItem(item){
-            this.selectedItem = item;
-        },
 
-        async fetchCartItems() {
+        async fetchBookItems() {
             try {
-                const response = await fetch('database/API/api-cart.php', {
+
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user.id) {
+                    alert('Please log in to add items to your cart');
+                    this.$router.push('/login');
+                    return;
+                }
+
+                const response = await fetch('./backend(OOP)/handler/bookingHandler.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                        body: JSON.stringify({
+                            action: 'getBookingDetailsByAccountId',  // Ensure this matches the action you're using in your bookingHandler.php
+                            accountId: user.id,  // Ensure this matches the user ID key in your login response
+                        })
                 });
                 const result = await response.json();
                 if (result.success) {
-                    this.cartItems = result.cartItems;
+                    this.bookItems = result.data;
                 } else {
-                    console.error('Failed to fetch cart items:', result.message);
+                    console.error('Failed to fetch book items:', result.message);
                 }
             } catch (error) {
                 console.error('Error:', error);
             }
         },
 
-        async deleteCartItems(item) {
+        async deleteBookItems(item) {
+
+            this.selectedItem = item;
+
             try {
-                const response = await fetch('database/API/api-cart.php', {
-                    method: 'DELETE',
+                const response = await fetch('./backend(OOP)/handler/bookingHandler.php', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        slotid: item.parkingslotid,
-                        cartid: item.cartid
+                        action: 'cancelBooking',
+                        id: this.selectedItem.id,
+                        parkingSlotId: this.selectedItem.parkingSlotId
                     })
                 });
                 const result = await response.json();
@@ -49,7 +62,7 @@ const Cart = {
                     this.$router.go();
                     alert('Delete item successfully!')
                 } else {
-                    console.error('Failed to delete cart items:', result.message);
+                    console.error('Failed to delete book items:', result.message);
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -58,21 +71,21 @@ const Cart = {
     },
 
     computed: {
-        totalCost() {
-            return this.cartItems.reduce((total, item) => {
-                // Assuming item.slotprice and item.duration are defined
-                return total + (item.slotprice * item.duration);
-            }, 0);
-        }
+        // totalCost() {
+        //     return this.bookItems.reduce((total, item) => {
+        //         // Assuming item.slotprice and item.duration are defined
+        //         return total + (item.slotprice * item.duration);
+        //     }, 0);
+        // }
     },
 
     template: `
         <div>
-            <h1>Cart</h1>
+            <h1>Book</h1>
             <ul>
-                <li v-for="item in cartItems" :key="item.cartid">
-                    Slot: {{ item.slotname }} - Start Date: {{ item.startdate }} - Duration: {{ item.duration }} - Price: {{ item.slotprice * item.duration }}$
-                    <button @click="deleteCartItems(item)">Delete</button>
+                <li v-for="item in bookItems" :key="item.bookid">
+                    Slot: {{ item.slotName }} - Start Date: {{ item.bookingTime }} - Duration: {{ item.duration }} Hours - Price: {{ item.slotprice * item.duration }}$
+                    <button @click="deleteBookItems(item)">Delete</button>
                 </li>
             </ul>
             <h2>Total Cost: {{ totalCost }}$</h2>
@@ -80,4 +93,4 @@ const Cart = {
     `
 };
 
-export default Cart;
+export default Book;

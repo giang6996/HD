@@ -68,6 +68,12 @@ class ParkingSlot {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getParkingSlotAvailable() {
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE status = 1 ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function updateParkingSlot($parkingSlotId, $slotTypeId, $status) {
         $stmt = $this->conn->prepare("UPDATE $this->table SET slotTypeId = ?, status = ? WHERE id = ?");
         if ($stmt->execute([$slotTypeId, $status, $parkingSlotId])) {
