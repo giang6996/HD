@@ -19,7 +19,7 @@ const Vehicle = {
       async fetchVehicles() {
         try {
           const user = JSON.parse(localStorage.getItem('user'));
-          if (!user.id) {
+          if (!user) {
             alert('Please log in to manage your vehicles');
             this.$router.push('/login');
             return;
@@ -75,7 +75,7 @@ const Vehicle = {
   
       async createVehicle() {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (!user.id) {
+        if (!user) {
           alert('Please log in to add a vehicle');
           this.$router.push('/login');
           return;

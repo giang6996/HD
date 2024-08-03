@@ -17,7 +17,7 @@ const Payment = {
   methods: {
     async fetchInvoiceDetails() {
       const user = JSON.parse(localStorage.getItem('user'));
-      if (!user.id) {
+      if (!user) {
         alert('Please log in to proceed');
         this.$router.push('/login');
         return;
@@ -55,7 +55,7 @@ const Payment = {
     
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (!user.id) {
+        if (!user) {
           alert('Please log in to proceed');
           this.$router.push('/login');
           return;

@@ -5,6 +5,7 @@ import Signup from '../components/signup.js';
 import Book from '../components/book.js';
 import Payment from '../components/payment.js';
 import Vehicle from '../components/vehicle.js';
+import Signout from '../components/signout.js'
 
 const routes = [
     { path: '/', component: Home },
@@ -13,7 +14,8 @@ const routes = [
     { path: '/signup', component: Signup },
     { path: '/book', component: Book },
     { path: '/payment', component: Payment},
-    { path: '/vehicle', component: Vehicle}
+    { path: '/vehicle', component: Vehicle},
+    { path: '/signout', component: Signout },
 ];
 
 const router = VueRouter.createRouter({ 

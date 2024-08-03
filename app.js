@@ -9,6 +9,7 @@ export default {
                     <li><router-link to="/login">Login</router-link></li>
                     <li><router-link to="/payment">Payments</router-link></li>
                     <li><router-link to="/vehicle">Vehicles</router-link></li>
+                    <li><router-link to="/signout">Signout</router-link></li>
                 </ul>
             </nav>
             <router-view></router-view>

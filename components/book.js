@@ -14,7 +14,7 @@ const Book = {
       async fetchBookItems() {
         try {
           const user = JSON.parse(localStorage.getItem('user'));
-          if (!user.id) {
+          if (!user) {
             alert('Please log in to add items to your cart');
             this.$router.push('/login');
             return;
