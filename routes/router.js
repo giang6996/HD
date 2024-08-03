@@ -4,6 +4,7 @@ import Login from '../components/login.js';
 import Signup from '../components/signup.js';
 import Book from '../components/book.js';
 import Payment from '../components/payment.js';
+import Vehicle from '../components/vehicle.js';
 
 const routes = [
     { path: '/', component: Home },
@@ -11,7 +12,8 @@ const routes = [
     { path: '/login', component: Login },
     { path: '/signup', component: Signup },
     { path: '/book', component: Book },
-    { path: '/payment', component: Payment}
+    { path: '/payment', component: Payment},
+    { path: '/vehicle', component: Vehicle}
 ];
 
 const router = VueRouter.createRouter({ 
