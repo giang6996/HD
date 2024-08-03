@@ -85,15 +85,15 @@ class Receipt {
     }
 
     // Method to get receipt details by ID
-    public function getReceiptDetails($receiptId) {
+    public function getReceiptDetails($paymentId) {
         $stmt = $this->conn->prepare(
             "SELECT r.*, a.customerName, p.amount as paymentAmount, p.paymentDate
             FROM $this->table r
             JOIN accounts a ON r.accountId = a.id
             JOIN payments p ON r.paymentId = p.id
-            WHERE r.id = ?"
+            WHERE r.paymentId = ?"
         );
-        $stmt->execute([$receiptId]);
+        $stmt->execute([$paymentId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 

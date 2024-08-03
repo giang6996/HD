@@ -14,10 +14,10 @@ class BookingController {
 
     // Create a new booking
     public function createBooking($data) {
-        if (!isset($data['accountId']) || !isset($data['parkingSlotId']) || !isset($data['bookingTime']) || !isset($data['duration'])) {
+        if (!isset($data['accountId']) || !isset($data['paymentId']) || !isset($data['parkingSlotId']) || !isset($data['bookingTime']) || !isset($data['duration'])) {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
-        return $this->booking->createBooking($data['accountId'], $data['parkingSlotId'], $data['bookingTime'], $data['duration']);
+        return $this->booking->createBooking($data['accountId'], $data['paymentId'], $data['parkingSlotId'], $data['bookingTime'], $data['duration']);
     }
 
     // Get booking details by ID

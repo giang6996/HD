@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     switch ($data['action']) {
         case 'createBooking':
-            if (isset($data['accountId'], $data['parkingSlotId'], $data['bookingTime'], $data['duration'])) {
+            if (isset($data['accountId'], $data['paymentId'], $data['parkingSlotId'], $data['bookingTime'], $data['duration'])) {
                 $response = $controller->createBooking($data);
                 
                 if ($response['success']) {

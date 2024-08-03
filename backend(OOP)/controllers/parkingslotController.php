@@ -14,11 +14,11 @@ class ParkingSlotController {
 
     // Create a new parking slot
     public function createParkingSlot($data) {
-        if (!isset($data['slotName']) || !isset($data['slotTypeId']) || !isset($data['status'])) {
+        if (!isset($data['slotName']) || !isset($data['slotTypeId']) || !isset($data['price']) || !isset($data['status'])) {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
 
-        return $this->parkingSlot->createParkingSlot($data['slotName'], $data['slotTypeId'], $data['status']);
+        return $this->parkingSlot->createParkingSlot($data['slotName'], $data['slotTypeId'], $data['status'], $data['price']);
     }
 
     // Get parking slot details by ID
@@ -56,11 +56,11 @@ class ParkingSlotController {
 
     // Update a parking slot
     public function updateParkingSlot($id, $data) {
-        if (!isset($id) || !isset($data['slotTypeId']) || !isset($data['status'])) {
+        if (!isset($id) || !isset($data['slotTypeId']) || !isset($data['price']) || !isset($data['status'])) {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
 
-        return $this->parkingSlot->updateParkingSlot($id, $data['slotTypeId'], $data['status']);
+        return $this->parkingSlot->updateParkingSlot($id, $data['slotTypeId'], $data['status'], $data['price']);
     }
 
     // Delete a parking slot

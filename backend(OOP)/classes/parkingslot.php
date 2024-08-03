@@ -11,6 +11,7 @@ class ParkingSlot {
     private string $slotName;
     private int $slotTypeId;
     private string $status;
+    private float $price;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -48,9 +49,17 @@ class ParkingSlot {
         $this->status = $status;
     }
 
-    public function createParkingSlot($slotName, $slotTypeId, $status) {
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (slotName, slotTypeId, status) VALUES (?, ?, ?)");
-        if ($stmt->execute([$slotName, $slotTypeId, $status])) {
+    public function getPrice(): float {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): void {
+        $this->price = $price;
+    }
+
+    public function createParkingSlot($slotName, $slotTypeId, $status, $price) {
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (slotName, slotTypeId, status, price) VALUES (?, ?, ?, ?)");
+        if ($stmt->execute([$slotName, $slotTypeId, $status, $price])) {
             return ['success' => true, 'message' => 'Parking slot created'];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
@@ -74,9 +83,9 @@ class ParkingSlot {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateParkingSlot($parkingSlotId, $slotTypeId, $status) {
-        $stmt = $this->conn->prepare("UPDATE $this->table SET slotTypeId = ?, status = ? WHERE id = ?");
-        if ($stmt->execute([$slotTypeId, $status, $parkingSlotId])) {
+    public function updateParkingSlot($parkingSlotId, $slotTypeId, $status, $price) {
+        $stmt = $this->conn->prepare("UPDATE $this->table SET slotTypeId = ?, status = ?, price = ? WHERE id = ?");
+        if ($stmt->execute([$slotTypeId, $status, $price, $parkingSlotId])) {
             return ['success' => true, 'message' => 'Parking slot updated'];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];

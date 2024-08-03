@@ -11,6 +11,7 @@ const Catalog = {
   created() {
     this.fetchParkingLots();
   },
+
   methods: {
     async fetchParkingLots() {
       try {
@@ -44,7 +45,7 @@ const Catalog = {
       }
 
       const user = JSON.parse(localStorage.getItem('user'));
-      console.log(user.id);
+
       if (!user.id) {
         alert('Please log in to proceed');
         this.$router.push('/login');
@@ -62,6 +63,7 @@ const Catalog = {
             parkingSlotId: this.selectedSlot.id,
             bookingDate: this.startdate,
             duration: this.duration,
+            amount: this.selectedSlot.price,
             action: 'createInvoice'
           })
         });
@@ -82,7 +84,7 @@ const Catalog = {
       <h1>Catalog</h1>
       <ul>
         <li v-for="lot in parkingLots" :key="lot.id">
-          Slot name: {{ lot.slotName }} - Type ID: {{ lot.slotTypeId }} - Status: {{ lot.status }}
+          Slot name: {{ lot.slotName }} - Type ID: {{ lot.slotTypeId }} - Status: {{ lot.status }} - price: {{ lot.price }}
           <button @click="selectSlot(lot)">Select</button>
         </li>
       </ul>
@@ -91,7 +93,7 @@ const Catalog = {
         <h2>Select Details for {{ selectedSlot.slotName }}</h2>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate" v-model="startdate">
-        <label for="duration">Duration (days):</label>
+        <label for="duration">Duration (hours):</label>
         <input type="number" id="duration" v-model="duration">
         <button @click="createInvoice">Proceed to Payment</button>
         <button @click="selectedSlot = null">Cancel</button>

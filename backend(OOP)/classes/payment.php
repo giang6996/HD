@@ -43,7 +43,7 @@ class Payment {
     public function createPayment($amount, $accountId) {
         $stmt = $this->conn->prepare("INSERT INTO $this->table (amount, accountId) VALUES (?, ?)");
         if ($stmt->execute([$amount, $accountId])) {
-            return ['success' => true, 'message' => 'Payment created'];
+            return ['success' => true, 'message' => 'Payment created', 'paymentId' => $this->conn->lastInsertId()];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
     }

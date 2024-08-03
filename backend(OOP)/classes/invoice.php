@@ -11,6 +11,7 @@ class Invoice {
     private int $parkingSlotId;
     private DateTime $bookingDate;
     private int $duration;
+    private float $amount;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -57,10 +58,18 @@ class Invoice {
         $this->duration = $duration;
     }
 
+    public function getAmount(): float {
+        return $this->amount;
+    }
+
+    public function setAmount(float $amount): void {
+        $this->amount = $amount;
+    }
+
     // Method to create an invoice
-    public function createInvoice($accountId, $parkingSlotId, $bookingDate, $duration) {
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (accountId, parkingSlotId, bookingDate, duration) VALUES (?, ?, ?, ?)");
-        if ($stmt->execute([$accountId, $parkingSlotId, $bookingDate->format('Y-m-d'), $duration])) {
+    public function createInvoice($accountId, $parkingSlotId, $bookingDate, $duration, $amount) {
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (accountId, parkingSlotId, bookingDate, duration, amount) VALUES (?, ?, ?, ?, ?)");
+        if ($stmt->execute([$accountId, $parkingSlotId, $bookingDate->format('Y-m-d'), $duration, $amount * $duration])) {
             return ['success' => true, 'message' => 'Invoice created', 'invoiceId' => $this->conn->lastInsertId()];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
@@ -69,7 +78,7 @@ class Invoice {
     // Method to get invoice details by ID
     public function getInvoiceDetails($invoiceId) {
         $stmt = $this->conn->prepare(
-            "SELECT i.id as invoiceId, i.parkingSlotId, u.customerName, ps.slotName as itemName, i.bookingDate as bookDate, i.duration
+            "SELECT i.id as invoiceId, i.parkingSlotId, u.customerName, ps.slotName as itemName, i.bookingDate as bookDate, i.duration, i.amount
             FROM $this->table i
             JOIN accounts u ON i.accountId = u.id
             JOIN parking_slots ps ON i.parkingSlotId = ps.id
@@ -82,7 +91,7 @@ class Invoice {
     // Method to get invoice details by user ID
     public function getUserInvoice($accountId) {
         $stmt = $this->conn->prepare(
-            "SELECT i.id as invoiceId, i.parkingSlotId, u.customerName, ps.slotName as itemName, i.bookingDate as bookDate, i.duration
+            "SELECT i.id as invoiceId, i.parkingSlotId, u.customerName, ps.slotName as itemName, i.bookingDate as bookDate, i.duration, i.amount
             FROM $this->table i
             JOIN accounts u ON i.accountId = u.id
             JOIN parking_slots ps ON i.parkingSlotId = ps.id

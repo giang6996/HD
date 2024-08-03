@@ -9,6 +9,7 @@ class Booking {
     private int $id;
     private int $accountId;
     private int $parkingSlotId;
+    private int $paymentId;
     private DateTime $bookingTime;
     private int $duration;
 
@@ -31,6 +32,14 @@ class Booking {
 
     public function setAccountId(int $accountId): void {
         $this->accountId = $accountId;
+    }
+
+    public function getpaymentId(): int {
+        return $this->paymentId;
+    }
+
+    public function setpaymentId(int $paymentId): void {
+        $this->paymentId = $paymentId;
     }
 
     public function getParkingSlotId(): int {
@@ -58,9 +67,9 @@ class Booking {
     }
 
 
-    public function createBooking($accountId, $parkingSlotId, $bookingTime, $duration) {
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (accountId, parkingSlotId, bookingTime, duration) VALUES (?, ?, ?, ?)");
-        if ($stmt->execute([$accountId, $parkingSlotId, $bookingTime, $duration])) {
+    public function createBooking($accountId, $paymentId, $parkingSlotId, $bookingTime, $duration) {
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (accountId,paymentId, parkingSlotId, bookingTime, duration) VALUES (?, ?, ?, ?, ?)");
+        if ($stmt->execute([$accountId, $paymentId, $parkingSlotId, $bookingTime, $duration])) {
             return ['success' => true, 'message' => 'Booking created'];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];

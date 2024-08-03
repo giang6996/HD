@@ -14,7 +14,7 @@ class InvoiceController {
 
     // Create a new invoice
     public function createInvoice($data) {
-        if (!isset($data['accountId']) || !isset($data['parkingSlotId']) || !isset($data['bookingDate']) || !isset($data['duration'])) {
+        if (!isset($data['accountId']) || !isset($data['parkingSlotId']) || !isset($data['bookingDate']) || !isset($data['duration']) || !isset($data['amount'])) {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
 
@@ -25,7 +25,7 @@ class InvoiceController {
         }
 
         $bookingDate = new DateTime($data['bookingDate']);
-        return $this->invoice->createInvoice($data['accountId'], $data['parkingSlotId'], $bookingDate, $data['duration']);
+        return $this->invoice->createInvoice($data['accountId'], $data['parkingSlotId'], $bookingDate, $data['duration'], $data['amount']);
     }
 
     // Get invoice details by ID
