@@ -21,6 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($data['accountId'], $data['parkingSlotId'], $data['bookingTime'], $data['duration'])) {
                 $response = $controller->createBooking($data);
                 
+                if ($response['success']) {
+                    $parkingSlotData = [
+                        'action' => 'updateAvailability',
+                        'id' => $data['parkingSlotId'],
+                        'status' => '0' 
+                    ];
+
+                    $parkingSlotResponse = updateParkingSlotAvailability($parkingSlotData);
+                    if ($parkingSlotResponse === null || !$parkingSlotResponse['success']) {
+                        $response['parkingSlotUpdateError'] = $parkingSlotResponse['message'] ?? 'Failed to update parking slot availability';
+                    }
+                }
+
             } else {
                 $response = ['success' => false, 'accountId' => $data['accountId'], 'message' => 'Missing required fields for create booking'];
             }
@@ -70,4 +83,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
+
+function updateParkingSlotAvailability($data) {
+    $url = 'http://localhost/HD/backend(OOP)/handler/parkingslotHandler.php';
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => json_encode($data),
+        ],
+    ];
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    return json_decode($result, true);
+}
+
 ?>

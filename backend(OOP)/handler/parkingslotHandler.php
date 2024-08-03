@@ -41,6 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response = $controller->deleteParkingSlot($id);
             echo json_encode($response);
             break;
+            
+        case 'updateAvailability':
+            if (isset($data['id'], $data['status'])) {
+                $response = $controller->updateAvailability($data['id'], $data['status']);
+            } else {
+                $response = ['success' => false, 'message' => 'Missing required fields for updateAvailability'];
+            }
+            echo json_encode($response);
+            break;
 
         default:
             echo json_encode(['success' => false, 'message' => 'Invalid action']);

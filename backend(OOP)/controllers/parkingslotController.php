@@ -62,5 +62,13 @@ class ParkingSlotController {
 
         return $this->parkingSlot->deleteParkingSlot($id);
     }
+
+    public function updateAvailability($id, $status) {
+        if (!isset($id) || !isset($status)) {
+            return ['success' => false, 'message' => 'Missing required fields'];
+        }
+
+        return $this->parkingSlot->updateAvailability($id, $status);
+    }
 }
 ?>

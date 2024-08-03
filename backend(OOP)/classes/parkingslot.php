@@ -83,5 +83,13 @@ class ParkingSlot {
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
     }
+
+    public function updateAvailability($id, $status) {
+        $stmt = $this->conn->prepare("UPDATE $this->table SET status = ? WHERE id = ?");
+        if ($stmt->execute([$status, $id])) {
+            return ['success' => true, 'message' => 'Availability updated'];
+        }
+        return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
+    }
 }
 ?>
