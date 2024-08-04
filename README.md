@@ -27,7 +27,7 @@ Online Smart Parking System is a Parking Slot Booking System developed using Vue
 3. Run the following command to clone the project repository:
    
    ```sh
-   git clone https://github.com/yourusername/VueJs-OSPS-group5.git
+   git clone https://github.com/giang6996/VueJs-OSPS-group5.git
 5. After cloning, the project directory VueJs-OSPS-group5 should be present inside xampp/htdocs
 
 
