@@ -18,6 +18,11 @@ class AccountController {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
 
+        $existingAccount = $this->account->getAccountByEmail($data['customerEmail']);
+        if ($existingAccount) {
+            return ['success' => false, 'message' => 'Email already exists'];
+        }
+
         return $this->account->createAccount($data['customerName'], $data['customerEmail'], $data['customerPassword']);
     }
 
@@ -53,14 +58,19 @@ class AccountController {
         return $this->account->deleteAccount($id);
     }
 
-    public function login($data) {
+    public function loginAccount($data) {
         if (!isset($data['customerEmail']) || !isset($data['customerPassword'])) {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
 
         $accountDetails = $this->account->getAccountByEmail($data['customerEmail']);
         if ($accountDetails && $data['customerPassword'] == $accountDetails['customerPassword']) {
-            return ['success' => true, 'message' => 'Login successful', 'data' => $accountDetails];
+            $filteredAccountDetails = [
+                'id' => $accountDetails['id'],
+                'customerName' => $accountDetails['customerName'],
+                'customerEmail' => $accountDetails['customerEmail']
+            ];
+            return ['success' => true, 'message' => 'Login successful', 'data' => $filteredAccountDetails];
         } else {
             return ['success' => false, 'message' => 'Invalid email or password'];
         }

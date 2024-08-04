@@ -22,12 +22,6 @@ const Signup = {
         }
   
         // Prepare data for API
-        const userData = {
-          customerName: this.username,
-          customerEmail: this.email,
-          customerPassword: this.password,
-          authmode: 'signup'
-        };
   
         try {
           const response = await fetch('./backend(OOP)/handler/accountHandler.php', {
@@ -35,7 +29,12 @@ const Signup = {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify({
+              customerName: this.username,
+              customerEmail: this.email,
+              customerPassword: this.password,
+              authmode: 'signup'
+            })
           });
   
           const result = await response.json();

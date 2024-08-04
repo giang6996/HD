@@ -38,6 +38,7 @@ const Catalog = {
     selectSlot(slot) {
       this.selectedSlot = slot;
     },
+    
     async createInvoice() {
       if (!this.startdate || !this.duration) {
         this.errorMessage = 'Please fill in all fields';

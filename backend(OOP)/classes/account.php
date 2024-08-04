@@ -42,14 +42,13 @@ class Account {
         $this->customerEmail = $customerEmail;
     }
 
-    public function getCustomerPhone(): string {
+    public function getCustomerPassword(): string {
         return $this->customerPassword;
     }
 
-    public function setCustomerPhone(string $customerPassword): void {
+    public function setCustomerPassword(string $customerPassword): void {
         $this->customerPassword = $customerPassword;
     }
-
 
  // Create table if it doesn't exist
     private function createTableIfNotExists() {

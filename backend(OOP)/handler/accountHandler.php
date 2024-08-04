@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response = ['success' => false, 'message' => 'Missing required fields signup handler'];
         }
     } 
-    if($data['authmode'] == 'accountDetails'){
+    else if($data['authmode'] == 'accountDetails'){
         if (isset($data['accountId'])) {
             $response = $controller->getAccountDetails($data['accountId']);
         } else {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     else {
         if (isset($data['customerEmail'], $data['customerPassword'])) {
-            $response = $controller->login($data);
+            $response = $controller->loginAccount($data);
         } else {
             $response = ['success' => false, 'message' => 'Missing required fields in login handler'];
         }

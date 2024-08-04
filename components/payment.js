@@ -89,7 +89,7 @@ const Payment = {
           this.errorMessage = 'Payment completed but failed to create booking: ' + bookingResult.message;
           return;
         }
-        this.successMessage += ' and Booking created successfully';
+        this.successMessage += ' and booking created successfully';
     
         // Delete the invoice after successful booking creation
         const deleteInvoiceData = {
@@ -101,7 +101,6 @@ const Payment = {
           this.errorMessage = 'Payment and booking completed, but failed to delete invoice: ' + deleteInvoiceResult.message;
           return;
         }
-        this.successMessage += ' and Invoice deleted successfully';
     
         // Create receipt after successful invoice deletion
         const receiptData = {
