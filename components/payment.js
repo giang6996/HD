@@ -126,7 +126,6 @@ const Payment = {
       }
     },
 
-
     async apiRequest(url, data) {
       try {
         const response = await fetch(url, {
@@ -142,46 +141,69 @@ const Payment = {
         return { success: false, message: 'An error occurred while making the request.' };
       }
     },
+
+    async cancelInvoice() {
+      try {
+        const deleteInvoiceData = {
+          id: this.invoice.invoiceId,
+          action: 'deleteInvoice'
+        };
+        const deleteInvoiceResult = await this.apiRequest('./backend(OOP)/handler/invoiceHandler.php', deleteInvoiceData);
+        if (!deleteInvoiceResult.success) {
+          this.errorMessage = 'Failed to delete invoice: ' + deleteInvoiceResult.message;
+          return;
+        }
+        this.successMessage = 'Invoice deleted successfully';
+        this.invoice = null; // Reset the invoice
+      } catch (error) {
+        console.error('Error:', error);
+        this.errorMessage = 'An error occurred while deleting the invoice: ' + error.message;
+      }
+    },
+
   },
   template: `
     <div class="container my-5">
-    <h1 class="text-center mb-4">Invoice Details</h1>
-
-    <div v-if="invoice">
-      <div class="card shadow-lg p-4">
-        <div class="card-body">
-          <p><strong>Username:</strong> {{ invoice.customerName }}</p>
-          <p><strong>Item Name:</strong> {{ invoice.itemName }}</p>
-          <p><strong>Booking Date:</strong> {{ invoice.bookDate }}</p>
-          <p><strong>Duration:</strong> {{ invoice.duration }} hours</p>
-          <p><strong>Pay Amount:</strong> {{ invoice.amount }}$</p>
+      <h1 class="text-center mb-4">Invoice Details</h1>
+  
+      <div v-if="invoice">
+        <div class="card shadow-lg p-4">
+          <div class="card-body">
+            <p><strong>Username:</strong> {{ invoice.customerName }}</p>
+            <p><strong>Item Name:</strong> {{ invoice.itemName }}</p>
+            <p><strong>Booking Date:</strong> {{ invoice.bookDate }}</p>
+            <p><strong>Duration:</strong> {{ invoice.duration }} hours</p>
+            <p><strong>Pay Amount:</strong> {{ invoice.amount }}$</p>
+          </div>
         </div>
-      </div>
-      
-      <h2 class="text-center mt-4">Payment Details</h2>
-      <div class="card shadow-lg p-4">
-        <div class="card-body">
-          <div class="mb-3">
-            <label for="cardNumber" class="form-label">Card Number:</label>
-            <input type="text" id="cardNumber" v-model="cardNumber" class="form-control">
+        
+        <h2 class="text-center mt-4">Payment Details</h2>
+        <div class="card shadow-lg p-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="cardNumber" class="form-label">Card Number:</label>
+              <input type="text" id="cardNumber" v-model="cardNumber" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="cardExpiry" class="form-label">Card Expiry:</label>
+              <input type="text" id="cardExpiry" v-model="cardExpiry" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="cardCVV" class="form-label">Card CVV:</label>
+              <input type="text" id="cardCVV" v-model="cardCVV" class="form-control">
+            </div>
+            <div class="d-flex justify-content-between">
+              <button @click="completePayment" class="btn btn-primary">Complete Payment</button>
+              <button @click="cancelInvoice" class="btn btn-danger">Cancel Invoice</button>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="cardExpiry" class="form-label">Card Expiry:</label>
-            <input type="text" id="cardExpiry" v-model="cardExpiry" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="cardCVV" class="form-label">Card CVV:</label>
-            <input type="text" id="cardCVV" v-model="cardCVV" class="form-control">
-          </div>
-          <button @click="completePayment" class="btn btn-primary w-100">Complete Payment</button>
         </div>
+        
+        <p v-if="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+        <p v-if="successMessage" class="text-success mt-3">{{ successMessage }}</p>
       </div>
-      
-      <p v-if="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
-      <p v-if="successMessage" class="text-success mt-3">{{ successMessage }}</p>
+      <h2 v-else class="text-center text-danger mt-4">No Payment Found, please choose a slot first</h2>
     </div>
-    <h2 v-else class="text-center text-danger mt-4">No Payment Found, please choose a slot first</h2>
-  </div>
 
   `
 };

@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 function updateParkingSlotAvailability($data) {
-    $url = 'http://localhost/HD/backend(OOP)/handler/parkingslotHandler.php';
+    $url = 'http://localhost/VueJs-OSPS-Group5/backend(OOP)/handler/parkingslotHandler.php';
     $options = [
         'http' => [
             'header'  => "Content-type: application/json\r\n",

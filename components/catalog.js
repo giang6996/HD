@@ -98,7 +98,7 @@ const Catalog = {
       <h2 class="mb-3">Select Details for {{ selectedSlot.slotName }}</h2>
       <div class="mb-3">
         <label for="startDate" class="form-label">Start Date:</label>
-        <input type="date" id="startDate" v-model="startdate" class="form-control">
+        <input type="datetime-local" id="startDate" v-model="startdate" class="form-control">
       </div>
       <div class="mb-3">
         <label for="duration" class="form-label">Duration (hours):</label>

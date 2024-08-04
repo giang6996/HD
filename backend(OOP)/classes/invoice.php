@@ -69,7 +69,7 @@ class Invoice {
     // Method to create an invoice
     public function createInvoice($accountId, $parkingSlotId, $bookingDate, $duration, $amount) {
         $stmt = $this->conn->prepare("INSERT INTO $this->table (accountId, parkingSlotId, bookingDate, duration, amount) VALUES (?, ?, ?, ?, ?)");
-        if ($stmt->execute([$accountId, $parkingSlotId, $bookingDate->format('Y-m-d'), $duration, $amount * $duration])) {
+        if ($stmt->execute([$accountId, $parkingSlotId, $bookingDate->format('Y-m-d H:i:s'), $duration, $amount * $duration])) {
             return ['success' => true, 'message' => 'Invoice created', 'invoiceId' => $this->conn->lastInsertId()];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
