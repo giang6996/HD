@@ -49,7 +49,7 @@ Online Smart Parking System is a Parking Slot Booking System developed using Vue
     } catch (PDOException $e) {
         die("Database connection failed: " . $e->getMessage());
     }
- 5.  Configure $url of the parkingslotHandler inside bookingHandler in backend(OOP)/handler/bookingHandler.js to match the working directory
+ 5.  Configure $url of the parkingslotHandler inside bookingHandler in backend(OOP)/handler/bookingHandler.php to match the working directory
        ```sh
        function updateParkingSlotAvailability($data) {
        $url = 'http://localhost/VueJs-OSPS-Group5/backend(OOP)/handler/parkingslotHandler.php' //CONFIGURE HERE!;
