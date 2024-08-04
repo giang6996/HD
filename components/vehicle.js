@@ -133,7 +133,7 @@ const Vehicle = {
           if (result.success) {
             this.successMessage = 'Vehicle deleted successfully';
             this.errorMessage = '';
-            this.$router.push('/vehicle')
+            this.$router.go();
           } else {
             this.errorMessage = 'Failed to delete vehicle: ' + result.message;
           }
@@ -144,27 +144,40 @@ const Vehicle = {
       }
     },
     template: `
-      <div>
-        <h1>My Vehicles</h1>
-        <ul v-if="vehicles.length">
-          <li v-for="vehicle in vehicles" :key="vehicle.id">
+      <div class="container my-5">
+      <h1 class="text-center mb-4">My Vehicles</h1>
+      
+      <ul v-if="vehicles.length" class="list-group">
+        <li v-for="vehicle in vehicles" :key="vehicle.id" class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
             {{ vehicle.vehicleName }} (Type: {{ vehicle.typename }})
-            <button @click="deleteVehicle(vehicle)">Delete</button>
-          </li>
-        </ul>
-        <p v-else>No vehicles found.</p>
-  
-        <h2>Add New Vehicle</h2>
-        <label for="vehicleTypeId">Vehicle Type:</label>
-        <select id="vehicleTypeId" v-model="newVehicle.vehicleTypeId">
-          <option v-for="type in vehicleTypes" :key="type.typeid" :value="type.typeid">{{ type.typename }}</option>
-        </select>
-        <label for="vehicleName">Vehicle Name:</label>
-        <input type="text" id="vehicleName" v-model="newVehicle.vehicleName">
-        <button @click="createVehicle">Add Vehicle</button>
-        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-        <p v-if="successMessage" class="success">{{ successMessage }}</p>
+          </div>
+          <div>
+            <button @click="deleteVehicle(vehicle)" class="btn btn-danger btn-sm">Delete</button>
+          </div>
+        </li>
+      </ul>
+      <p v-else class="text-danger text-center">No vehicles found.</p>
+
+      <div class="card mt-4">
+        <div class="card-body">
+          <h2 class="card-title">Add New Vehicle</h2>
+          <div class="mb-3">
+            <label for="vehicleTypeId" class="form-label">Vehicle Type:</label>
+            <select id="vehicleTypeId" v-model="newVehicle.vehicleTypeId" class="form-select">
+              <option v-for="type in vehicleTypes" :key="type.typeid" :value="type.typeid">{{ type.typename }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="vehicleName" class="form-label">Vehicle Name:</label>
+            <input type="text" id="vehicleName" v-model="newVehicle.vehicleName" class="form-control">
+          </div>
+          <button @click="createVehicle" class="btn btn-primary">Add Vehicle</button>
+          <p v-if="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+          <p v-if="successMessage" class="text-success mt-3">{{ successMessage }}</p>
+        </div>
       </div>
+    </div>
     `
   };
   

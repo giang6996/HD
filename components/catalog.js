@@ -80,26 +80,39 @@ const Catalog = {
     }
   },
   template: `
-    <div>
-      <h1>Catalog</h1>
-      <ul>
-        <li v-for="lot in parkingLots" :key="lot.id">
-          Slot name: {{ lot.slotName }} - Type ID: {{ lot.slotTypeId }} - Status: {{ lot.status }} - price: {{ lot.price }}
-          <button @click="selectSlot(lot)">Select</button>
-        </li>
-      </ul>
-
-      <div v-if="selectedSlot">
-        <h2>Select Details for {{ selectedSlot.slotName }}</h2>
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" v-model="startdate">
-        <label for="duration">Duration (hours):</label>
-        <input type="number" id="duration" v-model="duration">
-        <button @click="createInvoice">Proceed to Payment</button>
-        <button @click="selectedSlot = null">Cancel</button>
-        <p v-if="errorMessage">{{ errorMessage }}</p>
+    <div class="container my-5">
+    <h1 class="text-center mb-4">Catalog</h1>
+    <div class="d-flex flex-wrap justify-content-around">
+      <div v-for="lot in parkingLots" :key="lot.id" class="card m-2 shadow-lg" style="width: 18rem;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Slot name: {{ lot.slotName }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Type ID: {{ lot.slotTypeId }}</h6>
+          <p class="card-text">Status: {{ lot.status ? 'Available' : 'Not Available' }}</p>
+          <p class="card-text">Price: {{ lot.price }}</p>
+          <button @click="selectSlot(lot)" class="btn btn-primary">Select</button>
+        </div>
       </div>
     </div>
+
+    <div v-if="selectedSlot" class="mt-4">
+      <h2 class="mb-3">Select Details for {{ selectedSlot.slotName }}</h2>
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Start Date:</label>
+        <input type="date" id="startDate" v-model="startdate" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="duration" class="form-label">Duration (hours):</label>
+        <input type="number" id="duration" v-model="duration" class="form-control">
+      </div>
+      <div class="d-flex justify-content-between">
+        <button @click="createInvoice" class="btn btn-success">Proceed to Payment</button>
+        <button @click="selectedSlot = null" class="btn btn-secondary">Cancel</button>
+      </div>
+      <p v-if="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+    </div>
+  </div>
+
+
   `
 };
 

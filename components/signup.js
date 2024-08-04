@@ -1,120 +1,94 @@
 const Signup = {
     data() {
-        return {
-            // firstname: '',
-            // lastname: '',
-            username: '',
-            email: '',
-            // dateofbirth: '',
-            // street: '',
-            // district: '',
-            // city: '',
-            password: '',
-            confirmPassword: '',
-            errorMessage: {},
-            successMessage: ''
-        };
+      return {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        errorMessage: {},
+        successMessage: ''
+      };
     },
     methods: {
-        async signup() {
-            // Reset error and success messages
-            this.errorMessage = {};
-            this.successMessage = '';
-
-            // Validate inputs
-            if (this.password !== this.confirmPassword) {
-                this.errorMessage.password = 'Passwords do not match';
-                return;
-            }
-
-            // Prepare data for API
-            const userData = {
-                // firstname: this.firstname,
-                // lastname: this.lastname,
-                customerName: this.username,
-                customerEmail: this.email,
-                // dateofbirth: this.dateofbirth,
-                // street: this.street,
-                // district: this.district,
-                // city: this.city,
-                customerPassword: this.password,
-                authmode: 'signup'
-            };
-
-            try {
-                // const response = await fetch('database/API/api-signup.php', {
-                    const response = await fetch('./backend(OOP)/handler/accountHandler.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(userData)
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    this.successMessage = result.message;
-                    this.$router.push('/login');
-                } else {
-                    this.errorMessage = { general: result.message };
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                this.errorMessage = { general: 'An error occurred while processing your request.' };
-            }
+      async signup() {
+        // Reset error and success messages
+        this.errorMessage = {};
+        this.successMessage = '';
+  
+        // Validate inputs
+        if (this.password !== this.confirmPassword) {
+          this.errorMessage.password = 'Passwords do not match';
+          return;
         }
+  
+        // Prepare data for API
+        const userData = {
+          customerName: this.username,
+          customerEmail: this.email,
+          customerPassword: this.password,
+          authmode: 'signup'
+        };
+  
+        try {
+          const response = await fetch('./backend(OOP)/handler/accountHandler.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+          });
+  
+          const result = await response.json();
+          
+          if (result.success) {
+            this.successMessage = result.message;
+            this.$router.push('/login');
+          } else {
+            this.errorMessage = { general: result.message };
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          this.errorMessage = { general: 'An error occurred while processing your request.' };
+        }
+      }
     },
     template: `
-        <div>
-            <h1>Sign Up</h1>
-            <form @submit.prevent="signup">
-            
-                <label for="username">Username</label>
-                <input type="text" id="username" v-model="username">
-                <p v-if="errorMessage.username">{{errorMessage.username}}</p>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" v-model="email">
-                <p v-if="errorMessage.email">{{errorMessage.email}}</p>
-
-                <label for="password">Password</label>
-                <input type="password" id="password" v-model="password">
-                <p v-if="errorMessage.password">{{errorMessage.password}}</p>
-
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" v-model="confirmPassword">
-                <p v-if="errorMessage.confirmPassword">{{errorMessage.confirmPassword}}</p>
-
-                <button type="submit">Sign Up</button>
-                <p v-if="errorMessage.general">{{errorMessage.general}}</p>
-                <p v-if="successMessage">{{successMessage}}</p>
-            </form>
-        </div>
+      <div class="container my-5">
+        <h1 class="text-center mb-4">Sign Up</h1>
+        <form @submit.prevent="signup" class="w-50 mx-auto">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" v-model="username" class="form-control">
+            <div v-if="errorMessage.username" class="text-danger">{{errorMessage.username}}</div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" v-model="email" class="form-control">
+            <div v-if="errorMessage.email" class="text-danger">{{errorMessage.email}}</div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" v-model="password" class="form-control">
+            <div v-if="errorMessage.password" class="text-danger">{{errorMessage.password}}</div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control">
+            <div v-if="errorMessage.confirmPassword" class="text-danger">{{errorMessage.confirmPassword}}</div>
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+          <div v-if="errorMessage.general" class="text-danger mt-3">{{errorMessage.general}}</div>
+          <div v-if="successMessage" class="text-success mt-3">{{successMessage}}</div>
+        </form>
+  
+        <p class="text-center mt-4">Already have an account? <router-link to="/login">Login</router-link></p>
+      </div>
     `
-};
-
-export default Signup;
-
-// // <label for="firstname">First Name</label>
-                // <input type="text" id="firstname" v-model="firstname">
-                // <p v-if="errorMessage.firstname">{{errorMessage.firstname}}</p>
-
-                // <label for="lastname">Last Name</label>
-                // <input type="text" id="lastname" v-model="lastname">
-                // <p v-if="errorMessage.lastname">{{errorMessage.lastname}}</p>
-                                // <label for="dateofbirth">Date of Birth</label>
-                // <input type="date" id="dateofbirth" v-model="dateofbirth">
-                // <p v-if="errorMessage.dateofbirth">{{errorMessage.dateofbirth}}</p>
-
-                // <label for="street">Street</label>
-                // <input type="text" id="street" v-model="street">
-                // <p v-if="errorMessage.street">{{errorMessage.street}}</p>
-
-                // <label for="district">District</label>
-                // <input type="text" id="district" v-model="district">
-                // <p v-if="errorMessage.district">{{errorMessage.district}}</p>
-
-                // <label for="city">City</label>
-                // <input type="text" id="city" v-model="city">
-                // <p v-if="errorMessage.city">{{errorMessage.city}}</p>
+  };
+  
+  export default Signup;
+  

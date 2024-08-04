@@ -99,27 +99,38 @@ const Book = {
     },
   
     template: `
-      <div>
-        <h1>Book</h1>
-        <ul v-if="bookItems != ''">
-          <li v-for="item in bookItems" :key="item.bookid">
-            Slot: {{ item.slotName }} - Start Date: {{ item.bookingTime }} - Duration: {{ item.duration }} Hours
-            <button @click="deleteBookItems(item)">Delete</button>
-            <button @click="fetchReceiptDetails(item)">View Receipt</button>
-          </li>
-        </ul>
+      <div class="container my-5">
+    <h1 class="text-center mb-4">Book</h1>
 
-        <h2 v-else class="text-danger"> There are no book items, please choose a slot </h2>
-        <div v-if="showReceipt && receiptDetails">
-          <h2>Receipt Details</h2>
-          <p><strong>Username:</strong> {{ receiptDetails.customerName }}</p>
-          <p><strong>Payment Amount:</strong> {{ receiptDetails.paymentAmount }}$</p>
-          <p><strong>Receipt Date:</strong> {{ receiptDetails.receiptDate }}</p>
-          <p><strong>Start Date:</strong> {{ receiptDetails.startDate }}</p>
-          <p><strong>Duration:</strong> {{ receiptDetails.duration }} hours</p>
-          <button @click="showReceipt = false">Close</button>
+    <ul v-if="bookItems.length" class="list-group">
+      <li v-for="item in bookItems" :key="item.bookid" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Slot:</strong> {{ item.slotName }} <br>
+          <strong>Start Date:</strong> {{ item.bookingTime }} <br>
+          <strong>Duration:</strong> {{ item.duration }} Hours
         </div>
+        <div>
+          <button @click="deleteBookItems(item)" class="btn btn-danger btn-sm me-2">Delete</button>
+          <button @click="fetchReceiptDetails(item)" class="btn btn-primary btn-sm">View Receipt</button>
+        </div>
+      </li>
+    </ul>
+
+    <h2 v-else class="text-danger text-center">There are no book items, please choose a slot</h2>
+
+    <div v-if="showReceipt && receiptDetails" class="card mt-4">
+      <div class="card-body">
+        <h2 class="card-title">Receipt Details</h2>
+        <p><strong>Username:</strong> {{ receiptDetails.customerName }}</p>
+        <p><strong>Payment Amount:</strong> {{ receiptDetails.paymentAmount }}$</p>
+        <p><strong>Receipt Date:</strong> {{ receiptDetails.receiptDate }}</p>
+        <p><strong>Start Date:</strong> {{ receiptDetails.startDate }}</p>
+        <p><strong>Duration:</strong> {{ receiptDetails.duration }} hours</p>
+        <button @click="showReceipt = false" class="btn btn-secondary">Close</button>
       </div>
+    </div>
+  </div>
+
     `
   };
   

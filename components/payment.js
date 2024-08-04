@@ -144,26 +144,45 @@ const Payment = {
     },
   },
   template: `
+    <div class="container my-5">
+    <h1 class="text-center mb-4">Invoice Details</h1>
+
     <div v-if="invoice">
-      <h1>Invoice Details</h1>
-      <p><strong>Username:</strong> {{ invoice.customerName }}</p>
-      <p><strong>Item Name:</strong> {{ invoice.itemName }}</p>
-      <p><strong>Booking Date:</strong> {{ invoice.bookDate }}</p>
-      <p><strong>Duration:</strong> {{ invoice.duration }} hours</p>
-      <p><strong>Pay Amount:</strong> {{ invoice.amount}}$</p>
-
-
-      <h2>Payment Details</h2>
-      <label for="cardNumber">Card Number:</label>
-      <input type="text" id="cardNumber" v-model="cardNumber">
-      <label for="cardExpiry">Card Expiry:</label>
-      <input type="text" id="cardExpiry" v-model="cardExpiry">
-      <label for="cardCVV">Card CVV:</label>
-      <input type="text" id="cardCVV" v-model="cardCVV">
-      <button @click="completePayment">Complete Payment</button>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      <p v-if="successMessage" class="success">{{ successMessage }}</p>
+      <div class="card shadow-lg p-4">
+        <div class="card-body">
+          <p><strong>Username:</strong> {{ invoice.customerName }}</p>
+          <p><strong>Item Name:</strong> {{ invoice.itemName }}</p>
+          <p><strong>Booking Date:</strong> {{ invoice.bookDate }}</p>
+          <p><strong>Duration:</strong> {{ invoice.duration }} hours</p>
+          <p><strong>Pay Amount:</strong> {{ invoice.amount }}$</p>
+        </div>
+      </div>
+      
+      <h2 class="text-center mt-4">Payment Details</h2>
+      <div class="card shadow-lg p-4">
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="cardNumber" class="form-label">Card Number:</label>
+            <input type="text" id="cardNumber" v-model="cardNumber" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="cardExpiry" class="form-label">Card Expiry:</label>
+            <input type="text" id="cardExpiry" v-model="cardExpiry" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="cardCVV" class="form-label">Card CVV:</label>
+            <input type="text" id="cardCVV" v-model="cardCVV" class="form-control">
+          </div>
+          <button @click="completePayment" class="btn btn-primary w-100">Complete Payment</button>
+        </div>
+      </div>
+      
+      <p v-if="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+      <p v-if="successMessage" class="text-success mt-3">{{ successMessage }}</p>
     </div>
+    <h2 v-else class="text-center text-danger mt-4">No Payment Found, please choose a slot first</h2>
+  </div>
+
   `
 };
 
