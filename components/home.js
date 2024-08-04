@@ -21,9 +21,10 @@ export default {
           this.$router.push('/login');
         }
       },
+      
       async fetchVehicles() {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (!user.id) {
+        if (!user) {
           this.errorMessage = 'User not logged in';
           return;
         }
@@ -52,12 +53,17 @@ export default {
         }
       },
       toggleAccountInfo() {
-        this.showAccountInfo = !this.showAccountInfo;
-        this.showVehicleInfo = false;
+        if(this.showAccountInfo == false){
+            this.showAccountInfo = !this.showAccountInfo;
+            this.showVehicleInfo = false;
+        }
+        
       },
       toggleVehicleInfo() {
-        this.showVehicleInfo = !this.showVehicleInfo;
-        this.showAccountInfo = false
+        if(this.showVehicleInfo == false){
+            this.showVehicleInfo = !this.showVehicleInfo;
+            this.showAccountInfo = false
+        }
       }
     },
     template: `

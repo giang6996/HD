@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2024 at 12:10 AM
+-- Generation Time: Aug 04, 2024 at 07:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,7 +45,8 @@ INSERT INTO `accounts` (`id`, `customerName`, `customerEmail`, `customerPassword
 (4, 'Bob Brown', 'bob.brown@example.com', 'password123'),
 (5, 'Charlie Davis', 'charlie.davis@example.com', 'password123'),
 (6, 'test', 'test@example.us', 'test'),
-(10, 'R123', 'R123@gmail.com', 'R123');
+(10, 'R123', 'R123@gmail.com', 'R123'),
+(11, 'Giang', 'giangnguyencanh69@gmail.com', 'Giang');
 
 -- --------------------------------------------------------
 
@@ -61,13 +62,6 @@ CREATE TABLE `bookings` (
   `duration` int(11) NOT NULL,
   `paymentId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `bookings`
---
-
-INSERT INTO `bookings` (`id`, `accountId`, `parkingSlotId`, `bookingTime`, `duration`, `paymentId`) VALUES
-(56, 10, 8, '2024-08-12 00:00:00', 3, 15);
 
 -- --------------------------------------------------------
 
@@ -105,7 +99,7 @@ CREATE TABLE `parking_slots` (
 INSERT INTO `parking_slots` (`id`, `slotName`, `slotTypeId`, `status`, `price`) VALUES
 (6, 'Slot A', 2, 1, 3.99),
 (7, 'Slot B', 1, 1, 3.99),
-(8, 'Slot C', 2, 0, 3.99),
+(8, 'Slot C', 2, 1, 3.99),
 (9, 'Slot D', 1, 0, 3.99),
 (10, 'Slot E', 2, 1, 3.99);
 
@@ -131,7 +125,8 @@ INSERT INTO `payments` (`id`, `amount`, `accountId`, `paymentDate`) VALUES
 (12, 19.95, 6, '2024-08-03 20:17:43'),
 (13, 23.94, 6, '2024-08-03 20:19:13'),
 (14, 11.97, 6, '2024-08-03 20:19:45'),
-(15, 11.97, 10, '2024-08-03 20:25:08');
+(15, 11.97, 10, '2024-08-03 20:25:08'),
+(16, 19.95, 10, '2024-08-04 04:30:29');
 
 -- --------------------------------------------------------
 
@@ -158,7 +153,8 @@ INSERT INTO `receipts` (`id`, `paymentId`, `accountId`, `receiptDate`, `amount`,
 (7, 12, 6, '2024-08-03', 19.95, '2024-08-14', 5),
 (8, 13, 6, '2024-08-03', 23.94, '2024-08-07', 6),
 (9, 14, 6, '2024-08-03', 11.97, '2024-08-23', 3),
-(10, 15, 10, '2024-08-03', 11.97, '2024-08-12', 3);
+(10, 15, 10, '2024-08-03', 11.97, '2024-08-12', 3),
+(11, 16, 10, '2024-08-04', 19.95, '2024-08-13', 5);
 
 -- --------------------------------------------------------
 
@@ -264,19 +260,19 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `parking_slots`
@@ -288,13 +284,13 @@ ALTER TABLE `parking_slots`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `receipts`
 --
 ALTER TABLE `receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `types`
@@ -306,7 +302,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
