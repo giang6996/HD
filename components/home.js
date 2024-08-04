@@ -92,7 +92,7 @@ export default {
               <h2 class="card-title">My Vehicles</h2>
               <ul v-if= "vehicles != ''" class="list-group">
                 <li v-for="vehicle in vehicles" :key="vehicle.id" class="list-group-item">
-                  {{ vehicle.vehicleName }} (Type: {{ vehicle.typename }})
+                  {{ vehicle.vehicleName }} - {{vehicle.licensePlate}} (Type: {{ vehicle.typename }})
                 </li>
               </ul>
               <p class="text-danger" v-else>No vehicles found.</p>

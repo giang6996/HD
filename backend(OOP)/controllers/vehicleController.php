@@ -14,11 +14,11 @@ class VehicleController {
 
     // Create a new vehicle
     public function createVehicle($data) {
-        if (!isset($data['vehicleTypeId']) || !isset($data['vehicleName']) || !isset($data['accountId'])) {
+        if (!isset($data['vehicleTypeId']) || !isset($data['vehicleName']) || !isset($data['licensePlate']) || !isset($data['accountId'])) {
             return ['success' => false, 'message' => 'Missing required fields'];
         }
 
-        return $this->vehicle->createVehicle($data['vehicleTypeId'], $data['vehicleName'], $data['accountId']);
+        return $this->vehicle->createVehicle($data['vehicleTypeId'], $data['vehicleName'], $data['licensePlate'], $data['accountId']);
     }
 
     // Get vehicle details by ID

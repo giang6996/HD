@@ -9,6 +9,7 @@ class Vehicle {
     private int $id;
     private int $vehicleTypeId;
     private string $vehicleName;
+    private string $licensePlate;
     private int $accountId;
 
     public function __construct($db) {
@@ -40,6 +41,14 @@ class Vehicle {
         $this->vehicleName = $vehicleName;
     }
 
+    public function getLicensePlate(): string {
+        return $this->licensePlate;
+    }
+
+    public function setLicensePlate(string $licensePlate): void {
+        $this->licensePlate = $licensePlate;
+    }
+
     public function getAccountId(): int {
         return $this->accountId;
     }
@@ -49,9 +58,9 @@ class Vehicle {
     }
 
     // Method to create a vehicle
-    public function createVehicle($vehicleTypeId, $vehicleName, $accountId) {
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (vehicleTypeId, vehicleName, accountId) VALUES (?, ?, ?)");
-        if ($stmt->execute([$vehicleTypeId, $vehicleName, $accountId])) {
+    public function createVehicle($vehicleTypeId, $vehicleName, $licensePlate, $accountId) {
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (vehicleTypeId, vehicleName, licensePlate, accountId) VALUES (?, ?, ?, ?)");
+        if ($stmt->execute([$vehicleTypeId, $vehicleName, $licensePlate, $accountId])) {
             return ['success' => true, 'message' => 'Vehicle created', 'vehicleId' => $this->conn->lastInsertId()];
         }
         return ['success' => false, 'message' => 'Error: ' . $stmt->errorInfo()[2]];
