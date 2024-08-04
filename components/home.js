@@ -10,25 +10,21 @@ export default {
     },
     created() {
       this.fetchUserData();
-      this.fetchVehicles();
     },
     methods: {
       fetchUserData() {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-          this.user = user;
-        } else {
+
+        if (localStorage.getItem("user") === null) {
+          alert('Please log in to view your account details');
           this.$router.push('/login');
+        } else {
+          this.user = user;
+          this.fetchVehicles();
         }
       },
       
       async fetchVehicles() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user) {
-          this.errorMessage = 'User not logged in';
-          return;
-        }
-  
         try {
           const response = await fetch('./backend(OOP)/handler/vehicleHandler.php', {
             method: 'POST',
@@ -67,7 +63,7 @@ export default {
       }
     },
     template: `
-      <div class="container my-5">
+      <div class="container my-5" v-if="user !== null">
         <h1 class="text-center mb-4">Home</h1>
         
         <div class="row">
