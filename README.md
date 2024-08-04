@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a Parking Slot Booking System developed using Vue.js for the frontend and PHP (OOP) for the backend. The system allows users to register, log in, browse available parking slots, create invoices, make payments, and manage their bookings and vehicles.
+Online Smart Parking System is a Parking Slot Booking System developed using Vue.js for the frontend and PHP (OOP) for the backend. The system allows users to register, log in, browse available parking slots, create invoices, make payments, and manage their bookings and vehicles.
 
 ## Requirements
 
